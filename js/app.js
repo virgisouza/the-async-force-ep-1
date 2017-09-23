@@ -1,6 +1,41 @@
 
 (function(){
 
+  //Create list DOM elements
+
+  //"film" list tag
+  var newList = document.createElement('li');
+  newList.setAttribute("class", "film");
+  var getListParent = document.getElementById('filmList');
+  getListParent.appendChild(newList);
+
+  //"filmTitle" h2 tag
+  var filmTitle = document.createElement('h2');
+  filmTitle.setAttribute("class", "filmTitle");
+  getListParent.appendChild(filmTitle);
+
+  //"'Planets" h3 tag
+  var planets = document.createElement('h3');
+  planets.innerHTML = "Planets";
+  getListParent.appendChild(planets);
+
+  //"filmPlanets" ul tag
+  var filmPlanets = document.createElement('ul');
+  filmPlanets.setAttribute("class", "filmPlanets");
+  getListParent.appendChild(filmPlanets);
+
+  // "planetList" li tag
+  var planetList = document.createElement('li');
+  planetList.setAttribute("class", "planetList");
+  getListParent.appendChild(planetList);
+
+  //"planetName" h4 tag
+  var planetName = document.createElement('h4');
+  planetName.setAttribute("class", "planetName");
+  getListParent.appendChild(planetName);
+
+
+
 
   var person4Name = new XMLHttpRequest();
   person4Name.addEventListener("load", function () {
@@ -27,27 +62,39 @@
 
           });
           person14Species.open("GET", "http://swapi.co/api/species/1/");
-          person14Species.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          // person14Species.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           person14Species.send();
 
       });
       person14Name.open("GET", "http://swapi.co/api/people/14/?format=json");
-      person14Name.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      // person14Name.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       person14Name.send();
 
     });
 
     person4HomeWorld.open("GET", "http://swapi.co/api/planets/1/?format=json");
-    person4HomeWorld.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // person4HomeWorld.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     person4HomeWorld.send();
   });
 
   person4Name.open("GET", "http://swapi.co/api/people/4/?format=json");
-  person4Name.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  // person4Name.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   person4Name.send();
 
 })();
 
+/* Notes:
 
+1. Create IIFE where all asynchronous events will live
+2. Assign variable to new XMLHttpRequest();
+3. On that 'new' request, addEventListener to "load" and function which includes a method to parse API data : in above example => JSON.parse()
+4. note: in the parse argument, there will be a responseText property (can also be: response, status)
+5. set DOM element to have an innerHTML of data from API object
+6. GET API data: Object.open("GET", api data in selected format (JSON, etc))
+7. Set Request Header on objects that are not to be reused
+8. Invoke send() function  on Object
+9. Create elements using DOM for the film list
+
+*/
 
 
