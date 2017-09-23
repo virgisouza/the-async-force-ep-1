@@ -55,34 +55,52 @@
       let newList = document.createElement('li');
       let filmTitle = document.createElement('h2');
       let planetsHead = document.createElement('h3');
+      let newHopeList = document.createElement('li');
+      let planetTitle = document.createElement('ul');
+      planetTitle.setAttribute("class", "planetTitle");
       filmTitle.setAttribute("class", "filmTitle");
       filmTitle.innerHTML = filmListObj.results[i].title;
-      planetsHead.innerHTML = "Planets";
-      planetsHead.appendChild(filmTitle);
-      newList.appendChild(filmTitle);
+      newHopeList.innerHTML = "Planets";
+      planetTitle.innerHTML = filmListObj.results[i].planets;
+      newHopeList.appendChild(filmTitle);
       getListParent.appendChild(newList);
-    }
-  var newHopePlanetListReq = new XMLHttpRequest();
-  newHopePlanetListReq.addEventListener("load", function () {
-
-    var newHopePlanetListObj = JSON.parse(this.responseText);
-    for (var i = 0; i < newHopePlanetListObj.results.length; i++) {
-      let newHopeList = document.createElement('li');
-      let planetNewHopeTitle = document.createElement('h2');
-      let planetsHead = document.createElement('h3');
-      planetsHead.innerHTML = "Planets";
-      planetNewHopeTitle.innerHTML = newHopePlanetListObj.results[0].planets[i];
-      console.log(newHopePlanetListObj.results[i].planets);
-      newHopeList.appendChild(planetNewHopeTitle);
+      newList.appendChild(filmTitle);
       getListParent.appendChild(newHopeList);
+      newHopeList.appendChild(planetTitle);
+
+      var planetListReq = new XMLHttpRequest();
+      planetListReq.addEventListener("load", function () {
+        var planetListObj = JSON.parse(this.responseText);
+        for (var j = 0; j < planetListObj.results.length; j++) {
+          var newHope = planetListObj.results;
 
 
-      }
+          function getPLanets (currentValue, index, arr) {
+            console.log('currentValue :', currentValue);
+            console.log('index :', index);
+            console.log('array :', arr);
+            console.log(currentValue[index].arr[j]);
+             //currentValue[index].arr[index];
+
+          }
+
+          var apple = planetListObj.results[0].planets[j];
+
+        console.log(newHope.forEach(getPLanets));
+
+// forEach(callback[, arg])
+// It calls a function you provide for each element in the Array. Your callback function takes in 3 parameters:
+// Element - the current element being iterated over
+// Index - the current index of the element i
+
+          }
     });
-    newHopePlanetListReq.open("GET", "http://swapi.co/api/films/?format=json");
-    newHopePlanetListReq.send();
 
+    planetListReq.open("GET", "http://swapi.co/api/films/?format=json");
+    planetListReq.send();
+      }
   });
+
   filmListReq.open("GET", "http://swapi.co/api/films/?format=json");
   filmListReq.send();
 
