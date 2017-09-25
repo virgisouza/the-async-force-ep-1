@@ -28,20 +28,20 @@
 
 
           });
-          person14Species.open("GET", "http://swapi.co/api/species/1/");
+          person14Species.open("GET", "https://swapi.co/api/species/1/");
           person14Species.send();
 
       });
-      person14Name.open("GET", "http://swapi.co/api/people/14/?format=json");
+      person14Name.open("GET", "https://swapi.co/api/people/14/?format=json");
       person14Name.send();
 
     });
 
-    person4HomeWorld.open("GET", "http://swapi.co/api/planets/1/?format=json");
+    person4HomeWorld.open("GET", "https://swapi.co/api/planets/1/?format=json");
     person4HomeWorld.send();
   });
 
-  person4Name.open("GET", "http://swapi.co/api/people/4/?format=json");
+  person4Name.open("GET", "https://swapi.co/api/people/4/?format=json");
   person4Name.send();
 
   //Get film names
@@ -56,87 +56,50 @@
       let filmTitle = document.createElement('h2');
       let planetsHead = document.createElement('h3');
       let newHopeList = document.createElement('li');
-      let planetTitle = document.createElement('ul');
-      planetTitle.setAttribute("class", "planetTitle");
+
       filmTitle.setAttribute("class", "filmTitle");
+
+      //puts film titles in to list
       filmTitle.innerHTML = filmListObj.results[i].title;
+
+      //adds "Planets" list
       newHopeList.innerHTML = "Planets";
-      planetTitle.innerHTML = filmListObj.results[i].planets;
+
+      //array of planets API address
+      //create a variable to hold these arrays
+      let planetArr = filmListObj.results[i].planets;
+
       newHopeList.appendChild(filmTitle);
       getListParent.appendChild(newList);
       newList.appendChild(filmTitle);
       getListParent.appendChild(newHopeList);
-      newHopeList.appendChild(planetTitle);
+
+      //loop thru
+      for (var j = 0; j < planetArr.length; j++) {
 
       var planetListReq = new XMLHttpRequest();
       planetListReq.addEventListener("load", function () {
-        var planetListObj = JSON.parse(this.responseText);
-        for (var j = 0; j < planetListObj.results.length; j++) {
-          var newHope = planetListObj.results;
+        let planetListObj = JSON.parse(this.responseText);
 
+        //planet names go here
+        let planetTitle = document.createElement('ul');
 
-          function getPLanets (currentValue, index, arr) {
-            console.log('currentValue :', currentValue);
-            console.log('index :', index);
-            console.log('array :', arr);
-            console.log(currentValue[index].arr[j]);
-             //currentValue[index].arr[index];
+        //innerHTML needs to be set to planet names
+        planetTitle.innerHTML = planetListObj.name;
+        newHopeList.appendChild(planetTitle);
 
-          }
+      });
+      planetListReq.open("GET", planetArr[j]);
+      planetListReq.send();
 
-          var apple = planetListObj.results[0].planets[j];
-
-        console.log(newHope.forEach(getPLanets));
-
-// forEach(callback[, arg])
-// It calls a function you provide for each element in the Array. Your callback function takes in 3 parameters:
-// Element - the current element being iterated over
-// Index - the current index of the element i
-
-          }
-    });
-
-    planetListReq.open("GET", "http://swapi.co/api/films/?format=json");
-    planetListReq.send();
       }
+    }
   });
 
-  filmListReq.open("GET", "http://swapi.co/api/films/?format=json");
+  filmListReq.open("GET", "https://swapi.co/api/films/?format=json");
   filmListReq.send();
 
-
-  //Get Planets
-
-  //   var newHopePlanetListReq = new XMLHttpRequest();
-
-  //   newHopePlanetListReq.addEventListener("load", function () {
-  //   var newHopePlanetListObj = JSON.parse(this.responseText);
-  //   for (var i = 0; i < newHopePlanetListObj.results.length; i++) {
-  //     let newHopeList = document.createElement('li');
-  //     let planetNewHopeTitle = document.createElement('h2');
-  //     let planetsHead = document.createElement('h3');
-
-  //     planetsHead.innerHTML = "Planets";
-  //     planetNewHopeTitle.innerHTML = newHopePlanetListObj.results[0].planets[i];
-  //     console.log(newHopePlanetListObj.results[i].planets);
-  //     newHopeList.appendChild(planetNewHopeTitle);
-  //     getListParent.appendChild(newHopeList);
-
-
-
-  //   }
-  // });
-  // newHopePlanetListReq.open("GET", "http://swapi.co/api/films/?format=json");
-  // newHopePlanetListReq.send();
-
 })();
-
- //for every film
-      //get all planets that were listed in this film
-      //  (new XHR request, for each film, and for each planet)
-      //then render each planet in yet another nested <ul> list
-
-
 
 /* Notes:
 
@@ -149,7 +112,7 @@
 7. Set Request Header on objects that are not to be reused
 8. Invoke send() function  on Object
 9. Create elements using DOM for the film list dynamically & pull info from API
-
+10.  Finally, needed to set new HTTP request INSIDE for loop.
 
 */
 
